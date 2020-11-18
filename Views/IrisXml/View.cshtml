@@ -1,0 +1,175 @@
+﻿@model IEnumerable<IRIS.Models.IrisXmlLog>
+
+@{
+    ViewData["Title"] = "Index";
+    ViewData["subTitale"] = "XML data for " + ViewData["id"];
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index @ViewBag.id</h1>
+<br />
+<a asp-controller="IrisProcessed" asp-action="Index" asp-route-id="">Processed</a> /
+<a asp-controller="IrisXml" asp-action="Index" asp-route-id="">Xml</a> /
+<a asp-controller="IrisXml" asp-action="View" asp-route-id="">View</a> 
+<br />
+    <!--<p>
+    <a asp-action="Create">Create New</a>
+</p>
+    --->
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Find by Order: <input type="text" name="SearchOrder" value="@ViewData["OrderFilter"]" />
+            <!--<input type="submit" value="Search1" class="btn btn-default" />|-->
+            Find by MSGID: <input type="text" name="SearchMSGID" value="@ViewData["MSGIDFilter"]" />
+            <input type="submit" value="Search" class="btn btn-default" />|
+            <a asp-action="Index" asp-route-id="">Back to Full List</a>
+        </p>
+    </div>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.ActionLink("XML Data", "Index", new { sortField = ViewBag.xmlDataTimeSortParm, currentSortField = ViewBag.SortField, currentSortOrder = ViewBag.SortOrder })
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <pre lang="xml">@Html.DisplayFor(ModelItem => item.XmlPayload)</pre>
+                    @*@Html.Raw(item.XmlPayload)*@
+
+                    @*@Html.DisplayFor(ModelItem => item.XmlPayload)*@
+                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <br />
+                <div>
+                    <!--
+                        Current Page = @ViewData["currentPage"]
+                        <br />
+                        Page 1 = *@ViewData["PageLink01"]*
+                        <br />
+                        Page 2 = *@ViewData["PageLink02"]*
+                        <br />
+                    -->
+                    @if (@ViewData["PrevPage"] != null)
+                    {
+                        <a asp-action="Index"
+                           asp-route-sortOrder="@ViewData["CurrentSort"]"
+                           asp-route-pageNumber="@(ViewData["PrevPage"])"
+                           asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                           class="btn btn-default @ViewData["prevDisabled"]">
+                            Previous
+                        </a>
+                    }
+                    <a asp-action="Index"
+                       asp-route-sortOrder="@ViewData["CurrentSort"]"
+                       asp-route-pageNumber="@ViewData["PageLink01"]"
+                       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                       class="btn btn-default @ViewData["prevDisabled"]">
+                        @if (ViewData["currentPage"] == ViewData["PageLink01"])
+                        {
+                            <u> @ViewData["PageLink01"]</u>
+                        }
+                        else
+                        {
+                            @ViewData["PageLink01"]
+                        }
+                    </a>
+                    <a asp-action="Index"
+                       asp-route-sortOrder="@ViewData["CurrentSort"]"
+                       asp-route-pageNumber="@ViewData["PageLink02"]"
+                       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                       class="btn btn-default @ViewData["prevDisabled"]">
+                        @if (ViewData["currentPage"] == ViewData["PageLink02"])
+                        {
+                            <u> @ViewData["PageLink02"]</u>
+
+                        }
+                        else
+                        {
+                            @ViewData["PageLink02"]
+                        }
+                    </a>
+                    <a asp-action="Index"
+                       asp-route-sortOrder="@ViewData["CurrentSort"]"
+                       asp-route-pageNumber="@ViewData["PageLink03"]"
+                       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                       class="btn btn-default @ViewData["prevDisabled"]">
+                        @ViewData["PageLink03"]
+                    </a>
+                    <a asp-action="Index"
+                       asp-route-sortOrder="@ViewData["CurrentSort"]"
+                       asp-route-pageNumber="@ViewData["PageLink04"]"
+                       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                       class="btn btn-default @ViewData["prevDisabled"]">
+                        @ViewData["PageLink04"]
+                    </a>
+                    <a asp-action="Index"
+                       asp-route-sortOrder="@ViewData["CurrentSort"]"
+                       asp-route-pageNumber="@ViewData["PageLink05"]"
+                       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                       class="btn btn-default @ViewData["prevDisabled"]">
+                        @ViewData["PageLink05"]
+                    </a>
+                    <a asp-action="Index"
+                       asp-route-sortOrder="@ViewData["CurrentSort"]"
+                       asp-route-pageNumber="@ViewData["PageLink06"]"
+                       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                       class="btn btn-default @ViewData["prevDisabled"]">
+                        @ViewData["PageLink06"]
+                    </a>
+                    <a asp-action="Index"
+                       asp-route-sortOrder="@ViewData["CurrentSort"]"
+                       asp-route-pageNumber="@ViewData["PageLink07"]"
+                       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                       class="btn btn-default @ViewData["prevDisabled"]">
+                        @ViewData["PageLink07"]
+                    </a>
+                    <a asp-action="Index"
+                       asp-route-sortOrder="@ViewData["CurrentSort"]"
+                       asp-route-pageNumber="@ViewData["PageLink08"]"
+                       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                       class="btn btn-default @ViewData["prevDisabled"]">
+                        @ViewData["PageLink08"]
+                    </a>
+                    <a asp-action="Index"
+                       asp-route-sortOrder="@ViewData["CurrentSort"]"
+                       asp-route-pageNumber="@ViewData["PageLink09"]"
+                       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                       class="btn btn-default @ViewData["prevDisabled"]">
+                        @ViewData["PageLink09"]
+                    </a>
+                    <a asp-action="Index"
+                       asp-route-sortOrder="@ViewData["CurrentSort"]"
+                       asp-route-pageNumber="@ViewData["PageLink10"]"
+                       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                       class="btn btn-default @ViewData["prevDisabled"]">
+                        @ViewData["PageLink10"]
+                    </a>
+                    <a asp-action="Index"
+                       asp-route-sortOrder="@ViewData["CurrentSort"]"
+                       asp-route-pageNumber="@ViewData["PageLink11"]"
+                       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                       class="btn btn-default @ViewData["prevDisabled"]">
+                        @ViewData["PageLink11"]
+                    </a>
+                    @if (@ViewData["nextPage"] != null)
+                    {
+                        <a asp-action="Index"
+                           asp-route-sortOrder="@ViewData["CurrentSort"]"
+                           asp-route-pageNumber="@(ViewData["nextPage"])"
+                           asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                           class="btn btn-default @ViewData["prevDisabled"]">
+                            Next
+                        </a>
+                    }
+                    </div>

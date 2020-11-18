@@ -1,0 +1,276 @@
+﻿@model IEnumerable<IRIS.Models.IrisProcessedLog>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+<br />
+<a asp-controller="IrisProcessed" asp-action="Index" asp-route-id="">Processed</a> /
+<a asp-controller="IrisProcessed" asp-action="Index" asp-route-id="">Index</a> 
+<br />
+
+<!--<p>
+    <a asp-action="Create">Create New</a>
+</p>
+    --->
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Find by Order: <input type="text" name="SearchOrder" value="@ViewData["OrderFilter"]" />
+            <!--<input type="submit" value="Search1" class="btn btn-default" />|-->
+            Find by PatientId: <input type="text" name="SearchPatientId" value="@ViewData["PatientFilter"]" />
+            <input type="submit" value="Search" class="btn btn-default" />|
+            <a asp-action="Index">Back to Full List</a>
+        </p>
+    </div>
+</form>
+<div class=" bg-white" style="overflow-x: auto;">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.ActionLink("OrderNum", "Index", new { sortField = ViewBag.OrderNumSortParm, currentSortField = ViewBag.SortField, currentSortOrder = ViewBag.SortOrder })
+                </th>
+                <td>
+                    Link
+                    </th>
+                <th>
+                    @Html.ActionLink("Submissiontime", "Index", new { sortField = ViewBag.SubmissiontimeSortParm, currentSortField = ViewBag.SortField, currentSortOrder = ViewBag.SortOrder })
+                </th>
+                <th>
+                    @Html.ActionLink("PatientId", "Index", new { sortField = ViewBag.PatientIdSortParm, currentSortField = ViewBag.SortField, currentSortOrder = ViewBag.SortOrder })
+                </th>
+                <th>
+                    @Html.ActionLink("LogoFile", "Index", new { sortField = ViewBag.LogoFileSortParm, currentSortField = ViewBag.SortField, currentSortOrder = ViewBag.SortOrder })
+                </th>
+                <th>
+                    @Html.ActionLink("RxpharmCode", "Index", new { sortField = ViewBag.RxpharmCodeSortParm, currentSortField = ViewBag.SortField, currentSortOrder = ViewBag.SortOrder })
+                </th>
+                <th>
+                    @Html.ActionLink("OrgCode", "Index", new { sortField = ViewBag.OrgCodeSortParm, currentSortField = ViewBag.SortField, currentSortOrder = ViewBag.SortOrder })
+                </th>
+                <th>
+                    @Html.ActionLink("OrderControl", "Index", new { sortField = ViewBag.OrderControlSortParm, currentSortField = ViewBag.SortField, currentSortOrder = ViewBag.SortOrder })
+                </th>
+                <th>
+                    @Html.ActionLink("DocumentType", "Index", new { sortField = ViewBag.DocumentTypeSortParm, currentSortField = ViewBag.SortField, currentSortOrder = ViewBag.SortOrder })
+                </th>
+                <th>
+                    @Html.ActionLink("StrDocTypes", "Index", new { sortField = ViewBag.StrDocTypesSortParm, currentSortField = ViewBag.SortField, currentSortOrder = ViewBag.SortOrder })
+                </th>
+                <th>
+                    @Html.ActionLink("CountGiveCode", "Index", new { sortField = ViewBag.CountGiveCodeSortParm, currentSortField = ViewBag.SortField, currentSortOrder = ViewBag.SortOrder })
+                </th>
+                <th>
+                    @Html.ActionLink("CountNewRx", "Index", new { sortField = ViewBag.CountNewRxSortParm, currentSortField = ViewBag.SortField, currentSortOrder = ViewBag.SortOrder })
+                </th>
+                <th>
+                    @Html.ActionLink("ReorderLineCt", "Index", new { sortField = ViewBag.ReorderLineCtSortParm, currentSortField = ViewBag.SortField, currentSortOrder = ViewBag.SortOrder })
+                </th>
+                <th>
+                    @Html.ActionLink("OrderLineCt", "Index", new { sortField = ViewBag.OrderLineCtSortParm, currentSortField = ViewBag.SortField, currentSortOrder = ViewBag.SortOrder })
+                </th>
+                <th>
+                    @Html.ActionLink("PrintDrop", "Index", new { sortField = ViewBag.PrintDropSortParm, currentSortField = ViewBag.SortField, currentSortOrder = ViewBag.SortOrder })
+                </th>
+                <th>
+                    @Html.ActionLink("Edrop", "Index", new { sortField = ViewBag.EdropSortParm, currentSortField = ViewBag.SortField, currentSortOrder = ViewBag.SortOrder })
+                </th>
+                <th>
+                    @Html.ActionLink("LanguageId", "Index", new { sortField = ViewBag.LanguageIdSortParm, currentSortField = ViewBag.SortField, currentSortOrder = ViewBag.SortOrder })
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FillerOrderNum)
+                    </td>
+                    <td>
+                        <a asp-controller="IrisXml" asp-action="Index" asp-route-id="@item.FillerOrderNum">view</a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Submissiontime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PatientId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LogoFile)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RxpharmCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OrgCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OrderControl)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DocumentType)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StrDocTypes)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CountGiveCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CountNewRx)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ReorderLineCt)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OrderLineCt)
+                    </td>
+                    <td>
+                        <a href="@Html.DisplayFor(modelItem => item.PrintDrop)" target="_blank">Zip</a>
+                    </td>
+                    <td>
+                        <a href="@Html.DisplayFor(modelItem => item.Edrop)" target="_blank">EPdf</a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LanguageId)
+                    </td>
+                    <!--
+                                    <td>
+                                        <a asp-action="Edit" asp-route-id="@item.SequenceId">Edit</a> |
+                                        <a asp-action="Details" asp-route-id="@item.SequenceId">Details</a> |
+                                        <a asp-action="Delete" asp-route-id="@item.SequenceId">Delete</a>
+                                    </td>
+                    -->
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<br />
+<div>
+    <!--
+        Current Page = @ViewData["currentPage"]
+        <br />
+        Page 1 = *@ViewData["PageLink01"]*
+        <br />
+        Page 2 = *@ViewData["PageLink02"]*
+        <br />
+    -->
+    @if (@ViewData["PrevPage"] != null)
+    {
+        <a asp-action="Index"
+           asp-route-sortOrder="@ViewData["CurrentSort"]"
+           asp-route-pageNumber="@(ViewData["PrevPage"])"
+           asp-route-currentFilter="@ViewData["CurrentFilter"]"
+           class="btn btn-default @ViewData["prevDisabled"]">
+            Previous
+        </a>
+    }
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@ViewData["PageLink01"]"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-default @ViewData["prevDisabled"]">
+        @if (ViewData["currentPage"] == ViewData["PageLink01"])
+        {
+            <u> @ViewData["PageLink01"]</u>
+        }
+        else
+        {
+            @ViewData["PageLink01"]
+        }
+    </a>
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@ViewData["PageLink02"]"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-default @ViewData["prevDisabled"]">
+        @if (ViewData["currentPage"] == ViewData["PageLink02"])
+        {
+            <u> @ViewData["PageLink02"]</u>
+
+        }
+        else
+        {
+            @ViewData["PageLink02"]
+        }
+    </a>
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@ViewData["PageLink03"]"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-default @ViewData["prevDisabled"]">
+        @ViewData["PageLink03"]
+    </a>
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@ViewData["PageLink04"]"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-default @ViewData["prevDisabled"]">
+        @ViewData["PageLink04"]
+    </a>
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@ViewData["PageLink05"]"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-default @ViewData["prevDisabled"]">
+        @ViewData["PageLink05"]
+    </a>
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@ViewData["PageLink06"]"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-default @ViewData["prevDisabled"]">
+        @ViewData["PageLink06"]
+    </a>
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@ViewData["PageLink07"]"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-default @ViewData["prevDisabled"]">
+        @ViewData["PageLink07"]
+    </a>
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@ViewData["PageLink08"]"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-default @ViewData["prevDisabled"]">
+        @ViewData["PageLink08"]
+    </a>
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@ViewData["PageLink09"]"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-default @ViewData["prevDisabled"]">
+        @ViewData["PageLink09"]
+    </a>
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@ViewData["PageLink10"]"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-default @ViewData["prevDisabled"]">
+        @ViewData["PageLink10"]
+    </a>
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@ViewData["PageLink11"]"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-default @ViewData["prevDisabled"]">
+        @ViewData["PageLink11"]
+    </a>
+    @if (@ViewData["nextPage"] != null)
+    {
+        <a asp-action="Index"
+           asp-route-sortOrder="@ViewData["CurrentSort"]"
+           asp-route-pageNumber="@(ViewData["nextPage"])"
+           asp-route-currentFilter="@ViewData["CurrentFilter"]"
+           class="btn btn-default @ViewData["prevDisabled"]">
+            Next
+        </a>
+    }
+</div>

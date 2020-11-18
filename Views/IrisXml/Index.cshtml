@@ -1,0 +1,860 @@
+﻿@model IEnumerable<IRIS.Models.IrisXmlLog>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<h1>Index</h1>
+<br />
+<a asp-controller="IrisProcessed" asp-action="Index" asp-route-id="">Processed</a> /
+<a asp-controller="IrisXml" asp-action="Index" asp-route-id="">Xml</a> /
+<a asp-controller="IrisXml" asp-action="Index" asp-route-id="">Index</a>
+<br />
+<button type="button" data-dismiss="modal" class="uitk-icon uitk-icon-document_download" style="font-size:2rem;" id="exampletest">
+    Show
+</button>
+
+<!--<p>
+    <a asp-action="Create">Create New</a>
+</p>
+    --->
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Find by Order: <input type="text" name="SearchOrder" value="@ViewData["OrderFilter"]" />
+            <!--<input type="submit" value="Search1" class="btn btn-default" />|-->
+            Find by MSGID: <input type="text" name="SearchMSGID" value="@ViewData["MSGIDFilter"]" />
+            <input type="submit" value="Search" class="btn btn-default" />|
+            <a asp-action="Index" asp-route-id="">Back to Full List</a>
+        </p>
+    </div>
+</form>
+<div class=" bg-white" style="overflow-x: auto;">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.ActionLink("MSGID", "Index", new { sortField = ViewBag.MSGIDSortParm, currentSortField = ViewBag.SortField, currentSortOrder = ViewBag.SortOrder })
+                </th>
+                <th>
+                    @Html.ActionLink("Order ID", "Index", new { sortField = ViewBag.orderIDSortParm, currentSortField = ViewBag.SortField, currentSortOrder = ViewBag.SortOrder })
+                </th>
+                <th>
+                    @Html.ActionLink("XML Data", "Index", new { sortField = ViewBag.xmlDataTimeSortParm, currentSortField = ViewBag.SortField, currentSortOrder = ViewBag.SortOrder })
+                </th>
+                <th>
+                    @Html.ActionLink("Date Time", "Index", new { sortField = ViewBag.dateTimeSortParm, currentSortField = ViewBag.SortField, currentSortOrder = ViewBag.SortOrder })
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MSGID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OrderID)
+                    </td>
+                    <td>
+                        <button type="button" data-dismiss="modal" id="@(item.SequenceNumber)test">
+                            Show
+                        </button> |
+                        <!--<a data-dismiss="modal" class="uitk-icon-document_download" id="@(item.SequenceNumber)test">Show</a>-->
+
+                        <a asp-controller="IrisXml" asp-action="View" asp-route-id="@item.SequenceNumber">View</a> |
+                        @Html.ActionLink("Download", "DownloadFile", new { item = item.SequenceNumber, OrderNum = item.OrderID })
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DateTime)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@foreach (var item in Model)
+{
+    <!-- Modal -->
+    <div class="modal fade" id="@(item.SequenceNumber)Modal" tabindex="-1" aria-labelledby="60830ModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content uitk-c-dialog__container style="width:100%">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="xavierLabel">Xavier</h5>
+                    <button type="button" class="uitk-c-button uitk-c-button--ghost uitk-u-margin--xxs" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">close</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table" style="display: block;width: 100%;overflow-x: auto;padding: 3px;">
+                        <thead>
+                            <tr>
+                                <th scope="col">XML</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                @item.SequenceNumber
+                                <pre lang="xml">@Html.DisplayFor(ModelItem => item.XmlPayload)</pre>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="60830ModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content uitk-c-dialog__container style="width:100%">
+            <div class="modal-header">
+                <h5 class="modal-title" id="xavierLabel">Xavier</h5>
+                <button type="button" class="uitk-c-button uitk-c-button--ghost uitk-u-margin--xxs" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">close</span>
+                </button>
+            </div>
+            <div class=" bg-white" style="overflow-x: auto;">
+                <!--                <div class="modal-body">-->
+                <table class="table" style="display: block;width: 100%;overflow-x: auto;padding: 3px;">
+                    <thead>
+                        <tr>
+                            <th scope="col">XML</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <table>
+                                <tr><td>MSID</td><td>SMORA102</td></tr>
+                                <tr><td>File Date</td><td>2017-10-20T06:20:58</td></tr>
+                                <tr><td>msgControlId</td><td>20171020062057852195</td></tr>
+                                <tr><td>source</td><td>DOMSTEST1</td></tr>
+                                <tr><td>fileName</td><td>236747607-1</td></tr>
+                            </table>
+                            <br>
+                            <button type="button" data-dismiss="modal" id="examplePatient">
+                                Patient
+                            </button> |
+                            <br>
+                            <table>
+                                <tr><td>patientId</td><td>80558565</td></tr>
+                                <tr><td>Name</td><td>MICHAEL DECASTRO</td></tr>
+                                <tr><td>AddressLine1</td><td>8605 60TH RD APT 2J</td></tr>
+                                <tr><td>AddressLine2</td><td>APT 2J</td></tr>
+                                <tr><td>City</td><td>ELMHURST NY 11373-5514</td></tr>
+                                <tr><td>dob</td><td>1944-09-15</td></tr>
+                                <tr><td>Phone</td><td>(718)424-3173</td></tr>
+                                <tr><td>Email</td><td> </td></tr>
+                            </table>
+                            <br>
+                            patientReorders
+                            <br>
+                            <table>
+                                <tr>
+                                    <td>
+                                        reorderType
+                                    </td>
+                                    <td>
+                                        rxNumber
+                                    </td>
+                                    <td>
+                                        prescriberfullName
+                                    </td>
+                                    <td>
+                                        drugName
+                                    </td>
+                                    <td>
+                                        genericFor
+                                    </td>
+                                    <td>
+                                        dateFilled
+                                    </td>
+                                    <td>
+                                        refillDate
+                                    </td>
+                                    <td>
+                                        rxExpirationDate
+                                    </td>
+                                    <td>
+                                        refillsRemaining
+                                    </td>
+                                    <td>
+                                        quantityText
+                                    </td>
+                                    <td>
+                                        pharmacyCode
+                                    </td>
+                                    <td>
+                                        hffEnrollmentFlag
+                                    </td>
+                                    <td>
+                                        nextHffShipmtDate
+                                    </td>
+                                    <td>
+                                        hffNoRefillsRemain
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        1
+                                    </td>
+                                    <td>
+                                        184654955
+                                    </td>
+                                    <td>
+                                        LILY. EVANS
+                                    </td>
+                                    <td>
+                                        ATORVASTATIN TAB 10MG
+                                    </td>
+                                    <td>
+                                        LIPITOR      TAB 10MG
+                                    </td>
+                                    <td>
+                                        2017-10-20
+                                    </td>
+                                    <td>
+                                        2018-05-25
+                                    </td>
+                                    <td>
+                                        2018-05-25
+                                    </td>
+                                    <td>
+                                        0
+                                    </td>
+                                    <td>
+                                        10
+                                    </td>
+                                    <td>
+                                        0001
+                                    </td>
+                                    <td>
+                                        NE
+                                    </td>
+                                    <td>
+                                        1800-07-02
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>
+
+                        </tr>
+                        <tr>
+                            <td>
+                                1
+                            </td>
+                            <td>
+                                184654955
+                            </td>
+                            <td>
+                                LILY. EVANS
+                            </td>
+                            <td>
+                                ATORVASTATIN TAB 10MG
+                            </td>
+                            <td>
+                                LIPITOR      TAB 10MG
+                            </td>
+                            <td>
+                                2017-10-20
+                            </td>
+                            <td>
+                                2018-05-25
+                            </td>
+                            <td>
+                                2018-05-25
+                            </td>
+                            <td>
+                                0
+                            </td>
+                            <td>
+                                10
+                            </td>
+                            <td>
+                                0001
+                            </td>
+                            <td>
+                                NE
+                            </td>
+                            <td>
+                                1800-07-02
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                </table>
+                <br><br>
+                Order Summary
+                <br>
+                <table>
+                    <tr><td>fillerOrderNum</td><td>236747607-1StateNY</td></tr>
+                    <tr><td>orderEntryDate</td><td>2017-10-20</td></tr>
+                    <tr><td>orderControl</td><td>NW</td></tr>
+                    <tr><td>orgCode</td><td>2</td></tr>
+                    <tr><td>accountBalance</td><td>+0000000.00</td></tr>
+                    <tr><td>drugCost</td><td>+0000040.43</td></tr>
+                    <tr><td>totalCharges</td><td>+0000002.97</td></tr>
+                    <tr><td>totalCredit</td><td>+0000002.97</td></tr>
+                    <tr><td>balDueDesc</td><td>CREDIT BALANCE:</td></tr>
+                    <tr><td>balDueAmount</td><td>0</td></tr>
+                    <tr><td>balDueBarcode</td><td>23674760700000000</td></tr>
+                    <tr><td>achPaymentIndicator </td><td></td></tr>
+                    <tr><td>achAccountHolderName </td><td></td></tr>
+                    <tr><td>achNumberOfSettleDay </td><td></td></tr>
+                    <tr><td>achAuthorizationDate</td><td>1800-07-02</td></tr>
+                    <tr><td>RxReorderCt</td><td>1</td></tr>
+                    <tr><td>RxOrderCt</td><td>1</td></tr>
+                    <tr><td>logoFile</td><td>3</td></tr>
+                    <tr><td>url</td><td>myuhc.com</td></tr>
+                    <tr><td>tfn</td><td>1.888.290.7734</td></tr>
+                    <tr><td>healthPlanName</td><td>CONDON OMEARA MCGINTY DONNELLY</td></tr>
+                    <tr><td>coverage</td><td>PRIME</td></tr>
+                    <tr><td>account</td><td>8R7596</td></tr>
+                    <tr><td>group </td><td></td></tr>
+                    <tr><td>shipToFullName </td><td></td></tr>
+                    <tr><td>shipToAddressLine1</td><td>8605 60TH RD APT 2J</td></tr>
+                    <tr><td>shipToAddressLine2</td><td>APT 2J</td></tr>
+                    <tr><td>shipToAddressLine3 </td><td></td></tr>
+                    <tr><td>shipToCity</td><td>ELMHURST</td></tr>
+                    <tr><td>shipToState</td><td>NY</td></tr>
+                    <tr><td>shipToZip</td><td>11373-5514</td></tr>
+                    <tr><td>pickLightDocumentNames </td><td></td></tr>
+                </table>
+                <br>
+                <br>
+                Order Details:
+                <br>
+                <table>
+                    <tr>
+                        <td>DetailType</td>
+                        <td>DetailText</td>
+                        <td>DetailAmt</td>
+                        <td>rxNumber</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>XXXXXXXXXXXX1115</td>
+                        <td>2.97</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>XXXXXXXXXXXX1115</td>
+                        <td>22.77</td>
+                        <td></td>
+                    </tr>
+                </table>
+                </orderSummary>
+                <orderLines>
+                    <br>
+                    Order Line
+                    <br><br>
+                    <table>
+                        <tr>
+                            <td>rxNumber</td>
+                            <td>drugName</td>
+                            <td>genericFor</td>
+                            <td>giveCode</td>
+                            <td>scriptType</td>
+                            <td>drugClass</td>
+                            <td>specialDrugFlg</td>
+                            <td>dose</td>
+                            <td>invoiceQtyShip</td>
+                            <td>invoiceQtyOrdered</td>
+                            <td>daysSupply</td>
+                            <td>prescriberFullName</td>
+                            <td>longSigFlag</td>
+                            <td>longSig</td>
+                            <td>tabletDesc</td>
+                            <td>appearanceChange</td>
+                            <td>refillsRemaining</td>
+                            <td>refillDate</td>
+                            <td>dateFilled</td>
+                            <td>rxExpirationDate</td>
+                            <td>scriptCopay</td>
+                            <td>benefitAmtPaid</td>
+                            <td>hffStatus</td>
+                            <td>primCovName</td>
+                            <td>primCovCarrierId</td>
+                            <td>primCovAccountId</td>
+                            <td>primCovGroupId</td>
+                            <td>secCovName</td>
+                            <td>secCovCarrierId</td>
+                            <td>secCovAccountId</td>
+                            <td>secCovGroupId</td>
+                            <td>lineVerses</td>
+                        </tr>
+                        <tr>
+                            <td>184654955</td>
+                            <td>ATORVASTATIN TAB 10MG</td>
+                            <td>LIPITOR      TAB 10MG</td>
+                            <td>00378395005^39400010100310^ATORVASTATIN TAB 10MG</td>
+                            <td>N</td>
+                            <td></td>
+                            <specialDrugFlg>
+                                N</td>
+                                <td></td>
+                                <td>10</td>
+                                <td>10</td>
+                                <td>010</td>
+                                <td>LILY. EVANS</td>
+                                <td></td>
+                                <td></td>
+                                <td>10 WHITE OVAL</td>
+                                <td></td>
+                                <td>0</td>
+                                <td>2017-10-28</td>
+                                <td>1800-07-02</td>
+                                <td>2018-10-20</td>
+                                <td>2.97</td>
+                                <td>0</td>
+                                <td></td>
+                                <td>CONDON OMEARA MCGINTY DONNELLY-UHCPRIM01-F-08R759500010001</td>
+                                <td>UHCPRIM01</td>
+                                <td>F</td>
+                                <td>08R759500010001</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                        </tr>
+                        <tr>
+                            <td>184654955</td>
+                            <td>ATORVASTATIN TAB 10MG</td>
+                            <td>LIPITOR      TAB 10MG</td>
+                            <td>00378395005^39400010100310^ATORVASTATIN TAB 10MG</td>
+                            <td>N</td>
+                            <td></td>
+                            <specialDrugFlg>
+                                N</td>
+                                <td></td>
+                                <td>10</td>
+                                <td>10</td>
+                                <td>010</td>
+                                <td>LILY. EVANS</td>
+                                <td></td>
+                                <td></td>
+                                <td>10 WHITE OVAL</td>
+                                <td></td>
+                                <td>0</td>
+                                <td>2017-10-28</td>
+                                <td>1800-07-02</td>
+                                <td>2018-10-20</td>
+                                <td>2.97</td>
+                                <td>0</td>
+                                <td></td>
+                                <td>CONDON OMEARA MCGINTY DONNELLY-UHCPRIM01-F-08R759500010001</td>
+                                <td>UHCPRIM01</td>
+                                <td>F</td>
+                                <td>08R759500010001</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                        </tr>
+                    </table>
+                    </tr>
+                    </tbody>
+                    </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="examplePatient" tabindex="-1" aria-labelledby="60830ModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content uitk-c-dialog__container style="width:100%">
+            <div class="modal-header">
+                <h5 class="modal-title" id="xavierLabel">Xavier</h5>
+                <button type="button" class="uitk-c-button uitk-c-button--ghost uitk-u-margin--xxs" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">close</span>
+                </button>
+            </div>
+            <div class=" bg-white" style="overflow-x: auto;">
+                <!--                <div class="modal-body">-->
+                <table class="table" style="display: block;width: 100%;overflow-x: auto;padding: 3px;">
+                    <thead>
+                        <tr>
+                            <th scope="col">XML</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            Patient
+                            <br>
+                            <table>
+                                <tr><td>accountNumber</td><td>409239476</td></tr>
+                                <tr><td>altAccountNumber</td><td>97300844400</td></tr>
+                                <tr><td>patientId</td><td>80558565</td></tr>
+                                <tr><td>Name</td><td>MICHAEL DECASTRO</td></tr>
+                                <tr><td>AddressLine1</td><td>8605 60TH RD APT 2J</td></tr>
+                                <tr><td>AddressLine2</td><td>APT 2J</td></tr>
+                                <tr><td>City</td><td>ELMHURST</td></tr>
+                                <tr><td>State</td><td>NY</td></tr>
+                                <tr><td>Zip</td><td>11373-5514</td></tr>
+                                <tr><td>dob</td><td>1944-09-15</td></tr>
+                                <tr><td>gender</td><td>M</td></tr>
+                                <tr><td>languageId</td><td>E</td></tr>
+                                <tr><td>Phone</td><td>(718)424-3173</td></tr>
+                                <tr><td>Email</td><td> </td></tr>
+                                <tr><td>PreferenceHffEnrollmentFlag</td><td>N</td></tr>
+                                <tr><td>MOHistoryFirstOrderFlag</td><td>N</td></tr>
+                            </table>
+                    </tr>
+                    </tbody>
+                    </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="60830ModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content uitk-c-dialog__container style="width:100%">
+            <div class="modal-header">
+                <h5 class="modal-title" id="xavierLabel">Xavier</h5>
+                <button type="button" class="uitk-c-button uitk-c-button--ghost uitk-u-margin--xxs" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table class="table" style="display: block;width: 100%;overflow-x: auto;padding: 3px;">
+                    <thead>
+                        <tr>
+                            <th scope="col">XML</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <pre lang="xml">&lt;IRISLitpackRequest&gt;
+  &lt;message&gt;
+    &lt;fieldSeparator&gt;|&lt;/fieldSeparator&gt;
+    &lt;msgDatetime&gt;2017-09-25T01:06:18&lt;/msgDatetime&gt;
+    &lt;msgControlId&gt;20170925010617162230&lt;/msgControlId&gt;
+    &lt;msId&gt;IRISADMIN&lt;/msId&gt;
+    &lt;source&gt;DOMSTEST1&lt;/source&gt;
+    &lt;printQueue /&gt;
+    &lt;fileName&gt;236296617-1&lt;/fileName&gt;
+    &lt;documentTypes&gt;
+      &lt;documentType&gt;7&lt;/documentType&gt;
+    &lt;/documentTypes&gt;
+  &lt;/message&gt;
+  &lt;patient&gt;
+    &lt;accountNumber&gt;429527146&lt;/accountNumber&gt;
+    &lt;altAccountNumber&gt;96601884500&lt;/altAccountNumber&gt;
+    &lt;patientId&gt;80558646&lt;/patientId&gt;
+    &lt;patientFirstName&gt;GLORIA&lt;/patientFirstName&gt;
+    &lt;patientMiddleName /&gt;
+    &lt;patientLastName&gt;PEOPLES&lt;/patientLastName&gt;
+    &lt;patientAddressLine1&gt;95 SLICE DR&lt;/patientAddressLine1&gt;
+    &lt;patientAddressLine2 /&gt;
+    &lt;patientCity&gt;BLAIR&lt;/patientCity&gt;
+    &lt;patientState&gt;SC&lt;/patientState&gt;
+    &lt;patientZip&gt;29015-9784&lt;/patientZip&gt;
+    &lt;dob&gt;1963-03-02&lt;/dob&gt;
+    &lt;gender&gt;M&lt;/gender&gt;
+    &lt;languageId&gt;E&lt;/languageId&gt;
+    &lt;patientPhone&gt;(803)801-9233&lt;/patientPhone&gt;
+    &lt;patientEmail /&gt;
+    &lt;patientPreferenceHffEnrollmentFlag&gt;N&lt;/patientPreferenceHffEnrollmentFlag&gt;
+    &lt;patientMOHistoryFirstOrderFlag&gt;Y&lt;/patientMOHistoryFirstOrderFlag&gt;
+  &lt;/patient&gt;
+  &lt;patientReorders&gt;
+    &lt;patientReorder&gt;
+      &lt;reorderType&gt;1&lt;/reorderType&gt;
+      &lt;rxNumber&gt;184434355&lt;/rxNumber&gt;
+      &lt;prescriberfullName&gt;KIMBERLY. G. KINARD&lt;/prescriberfullName&gt;
+      &lt;drugName&gt;QUEtiapine TAB 400MG&lt;/drugName&gt;
+      &lt;genericFor /&gt;
+      &lt;dateFilled&gt;2017-09-19&lt;/dateFilled&gt;
+      &lt;refillDate&gt;2018-05-25&lt;/refillDate&gt;
+      &lt;rxExpirationDate&gt;2018-05-25&lt;/rxExpirationDate&gt;
+      &lt;refillsRemaining&gt;1&lt;/refillsRemaining&gt;
+      &lt;quantityText&gt;180&lt;/quantityText&gt;
+      &lt;pharmacyCode&gt;0001&lt;/pharmacyCode&gt;
+      &lt;hffEnrollmentFlag&gt;NE&lt;/hffEnrollmentFlag&gt;
+      &lt;nextHffShipmtDate&gt;1800-07-02&lt;/nextHffShipmtDate&gt;
+      &lt;hffNoRefillsRemain /&gt;
+    &lt;/patientReorder&gt;
+    &lt;patientReorder&gt;
+      &lt;reorderType&gt;1&lt;/reorderType&gt;
+      &lt;rxNumber&gt;184434358&lt;/rxNumber&gt;
+      &lt;prescriberfullName&gt;KIMBERLY. G. KINARD&lt;/prescriberfullName&gt;
+      &lt;drugName&gt;TraZODone TAB 100MG&lt;/drugName&gt;
+      &lt;genericFor /&gt;
+      &lt;dateFilled&gt;2017-09-19&lt;/dateFilled&gt;
+      &lt;refillDate&gt;2018-05-25&lt;/refillDate&gt;
+      &lt;rxExpirationDate&gt;2018-05-25&lt;/rxExpirationDate&gt;
+      &lt;refillsRemaining&gt;1&lt;/refillsRemaining&gt;
+      &lt;quantityText&gt;180&lt;/quantityText&gt;
+      &lt;pharmacyCode&gt;0001&lt;/pharmacyCode&gt;
+      &lt;hffEnrollmentFlag&gt;NE&lt;/hffEnrollmentFlag&gt;
+      &lt;nextHffShipmtDate&gt;1800-07-02&lt;/nextHffShipmtDate&gt;
+      &lt;hffNoRefillsRemain /&gt;
+    &lt;/patientReorder&gt;
+  &lt;/patientReorders&gt;
+  &lt;orderSummary&gt;
+    &lt;fillerOrderNum&gt;236296617-1&lt;/fillerOrderNum&gt;
+    &lt;orderEntryDate&gt;2017-09-19&lt;/orderEntryDate&gt;
+    &lt;orderControl&gt;NW&lt;/orderControl&gt;
+    &lt;orgCode&gt;3&lt;/orgCode&gt;
+    &lt;accountBalance&gt;+0000000.00&lt;/accountBalance&gt;
+    &lt;drugCost&gt;+0003801.83&lt;/drugCost&gt;
+    &lt;totalCharges&gt;+0000006.60&lt;/totalCharges&gt;
+    &lt;totalCredit&gt;+0000000.00&lt;/totalCredit&gt;
+    &lt;balDueDesc&gt;TOTAL DUE ON ACCOUNT:&lt;/balDueDesc&gt;
+    &lt;balDueAmount&gt;6.6&lt;/balDueAmount&gt;
+    &lt;balDueBarcode&gt;23629661700000660&lt;/balDueBarcode&gt;
+    &lt;achPaymentIndicator /&gt;
+    &lt;achAccountHolderName /&gt;
+    &lt;achNumberOfSettleDay /&gt;
+    &lt;achAuthorizationDate&gt;1800-07-02&lt;/achAuthorizationDate&gt;
+    &lt;RxReorderCt&gt;2&lt;/RxReorderCt&gt;
+    &lt;RxOrderCt&gt;2&lt;/RxOrderCt&gt;
+    &lt;logoFile&gt;3&lt;/logoFile&gt;
+    &lt;url&gt;uhcretiree.com&lt;/url&gt;
+    &lt;tfn&gt;1.877.889.6358&lt;/tfn&gt;
+    &lt;healthPlanName&gt;Care Improvement Plus Medicare Advantage&lt;/healthPlanName&gt;
+    &lt;coverage&gt;MPD&lt;/coverage&gt;
+    &lt;account&gt;R7444&lt;/account&gt;
+    &lt;group&gt;BOG&lt;/group&gt;
+    &lt;shipToFullName /&gt;
+    &lt;shipToAddressLine1&gt;95 SLICE DR&lt;/shipToAddressLine1&gt;
+    &lt;shipToAddressLine2 /&gt;
+    &lt;shipToAddressLine3 /&gt;
+    &lt;shipToCity&gt;BLAIR&lt;/shipToCity&gt;
+    &lt;shipToState&gt;SC&lt;/shipToState&gt;
+    &lt;shipToZip&gt;29015-9784&lt;/shipToZip&gt;
+    &lt;pickLightDocumentNames /&gt;
+    &lt;orderVerses&gt;
+      &lt;verse&gt;One (or more) of the items you ordered will be arriving in a separate shipment.&lt;/verse&gt;
+      &lt;verse&gt;One (or more) of your items has not been included in your order because we have been trying to contact your physician to clarify some information. Once clarified, the remaining portion of your order will be shipped. If you have any questions, please call the toll-free number on the top of this letter. Thank you for being a valued member.&lt;/verse&gt;
+      &lt;verse&gt;One (or more) of the items has not been included in your order because it requires additional processing. Once processed, the remaining portion of your order will be shipped. If you have any questions, please call the toll-free number on the top of this letter . We apologize for any inconvenience this may have caused.  Thank you for being a valued member&lt;/verse&gt;
+    &lt;/orderVerses&gt;
+    &lt;InvoiceLines /&gt;
+  &lt;/orderSummary&gt;
+  &lt;orderLines&gt;
+    &lt;orderLine&gt;
+      &lt;rxNumber&gt;184434358&lt;/rxNumber&gt;
+      &lt;drugName&gt;TraZODone TAB 100MG&lt;/drugName&gt;
+      &lt;genericFor /&gt;
+      &lt;giveCode&gt;50111043402^58120080100310^TraZODone TAB 100MG&lt;/giveCode&gt;
+      &lt;scriptType&gt;N&lt;/scriptType&gt;
+      &lt;drugClass /&gt;
+      &lt;specialDrugFlg&gt;N&lt;/specialDrugFlg&gt;
+      &lt;dose /&gt;
+      &lt;invoiceQtyShip&gt;180&lt;/invoiceQtyShip&gt;
+      &lt;invoiceQtyOrdered&gt;180&lt;/invoiceQtyOrdered&gt;
+      &lt;daysSupply&gt;090&lt;/daysSupply&gt;
+      &lt;prescriberFullName&gt;KIMBERLY. G. KINARD&lt;/prescriberFullName&gt;
+      &lt;longSigFlag /&gt;
+      &lt;longSig /&gt;
+      &lt;tabletDesc&gt;PLIVA 434 WHITE ROUND SCORD&lt;/tabletDesc&gt;
+      &lt;appearanceChange /&gt;
+      &lt;refillsRemaining&gt;1&lt;/refillsRemaining&gt;
+      &lt;refillDate&gt;2017-11-21&lt;/refillDate&gt;
+      &lt;dateFilled&gt;1800-07-02&lt;/dateFilled&gt;
+      &lt;rxExpirationDate&gt;2018-09-19&lt;/rxExpirationDate&gt;
+      &lt;scriptCopay&gt;3.3&lt;/scriptCopay&gt;
+      &lt;benefitAmtPaid&gt;0&lt;/benefitAmtPaid&gt;
+      &lt;hffStatus&gt;N&lt;/hffStatus&gt;
+      &lt;primCovName&gt;Care Improvement Plus Medicare Advantage (Regional PPO)-MPDOVA-M43008VRG99984-IR7444021CPM&lt;/primCovName&gt;
+      &lt;primCovCarrierId&gt;MPDOVA&lt;/primCovCarrierId&gt;
+      &lt;primCovAccountId&gt;M43008VRG99984&lt;/primCovAccountId&gt;
+      &lt;primCovGroupId&gt;IR7444021CPM&lt;/primCovGroupId&gt;
+      &lt;secCovName /&gt;
+      &lt;secCovCarrierId /&gt;
+      &lt;secCovAccountId /&gt;
+      &lt;secCovGroupId /&gt;
+      &lt;lineVerses /&gt;
+    &lt;/orderLine&gt;
+    &lt;orderLine&gt;
+      &lt;rxNumber&gt;184434355&lt;/rxNumber&gt;
+      &lt;drugName&gt;QUEtiapine TAB 400MG&lt;/drugName&gt;
+      &lt;genericFor /&gt;
+      &lt;giveCode&gt;67877024810^59153070100350^QUEtiapine TAB 400MG&lt;/giveCode&gt;
+      &lt;scriptType&gt;N&lt;/scriptType&gt;
+      &lt;drugClass /&gt;
+      &lt;specialDrugFlg&gt;N&lt;/specialDrugFlg&gt;
+      &lt;dose /&gt;
+      &lt;invoiceQtyShip&gt;180&lt;/invoiceQtyShip&gt;
+      &lt;invoiceQtyOrdered&gt;180&lt;/invoiceQtyOrdered&gt;
+      &lt;daysSupply&gt;090&lt;/daysSupply&gt;
+      &lt;prescriberFullName&gt;KIMBERLY. G. KINARD&lt;/prescriberFullName&gt;
+      &lt;longSigFlag /&gt;
+      &lt;longSig /&gt;
+      &lt;tabletDesc&gt;336 YELLOW OBLONG&lt;/tabletDesc&gt;
+      &lt;appearanceChange /&gt;
+      &lt;refillsRemaining&gt;1&lt;/refillsRemaining&gt;
+      &lt;refillDate&gt;2017-11-21&lt;/refillDate&gt;
+      &lt;dateFilled&gt;1800-07-02&lt;/dateFilled&gt;
+      &lt;rxExpirationDate&gt;2018-09-19&lt;/rxExpirationDate&gt;
+      &lt;scriptCopay&gt;3.3&lt;/scriptCopay&gt;
+      &lt;benefitAmtPaid&gt;0&lt;/benefitAmtPaid&gt;
+      &lt;hffStatus&gt;N&lt;/hffStatus&gt;
+      &lt;primCovName&gt;Care Improvement Plus Medicare Advantage (Regional PPO)-MPDOVA-M43008VRG99984-IR7444021CPM&lt;/primCovName&gt;
+      &lt;primCovCarrierId&gt;MPDOVA&lt;/primCovCarrierId&gt;
+      &lt;primCovAccountId&gt;M43008VRG99984&lt;/primCovAccountId&gt;
+      &lt;primCovGroupId&gt;IR7444021CPM&lt;/primCovGroupId&gt;
+      &lt;secCovName /&gt;
+      &lt;secCovCarrierId /&gt;
+      &lt;secCovAccountId /&gt;
+      &lt;secCovGroupId /&gt;
+      &lt;lineVerses /&gt;
+    &lt;/orderLine&gt;
+  &lt;/orderLines&gt;
+&lt;/IRISLitpackRequest&gt;</pre>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br />
+<div>
+    <!--
+        Current Page = @ViewData["currentPage"]
+        <br />
+        Page 1 = *@ViewData["PageLink01"]*
+        <br />
+        Page 2 = *@ViewData["PageLink02"]*
+        <br />
+    -->
+    @if (@ViewData["PrevPage"] != null)
+    {
+        <a asp-action="Index"
+           asp-route-sortOrder="@ViewData["CurrentSort"]"
+           asp-route-pageNumber="@(ViewData["PrevPage"])"
+           asp-route-currentFilter="@ViewData["CurrentFilter"]"
+           class="btn btn-default @ViewData["prevDisabled"]">
+            Previous
+        </a>
+    }
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@ViewData["PageLink01"]"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-default @ViewData["prevDisabled"]">
+        @if (ViewData["currentPage"] == ViewData["PageLink01"])
+        {
+            <u> @ViewData["PageLink01"]</u>
+        }
+        else
+        {
+            @ViewData["PageLink01"]
+        }
+    </a>
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@ViewData["PageLink02"]"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-default @ViewData["prevDisabled"]">
+        @if (ViewData["currentPage"] == ViewData["PageLink02"])
+        {
+            <u> @ViewData["PageLink02"]</u>
+
+        }
+        else
+        {
+            @ViewData["PageLink02"]
+        }
+    </a>
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@ViewData["PageLink03"]"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-default @ViewData["prevDisabled"]">
+        @ViewData["PageLink03"]
+    </a>
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@ViewData["PageLink04"]"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-default @ViewData["prevDisabled"]">
+        @ViewData["PageLink04"]
+    </a>
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@ViewData["PageLink05"]"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-default @ViewData["prevDisabled"]">
+        @ViewData["PageLink05"]
+    </a>
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@ViewData["PageLink06"]"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-default @ViewData["prevDisabled"]">
+        @ViewData["PageLink06"]
+    </a>
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@ViewData["PageLink07"]"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-default @ViewData["prevDisabled"]">
+        @ViewData["PageLink07"]
+    </a>
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@ViewData["PageLink08"]"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-default @ViewData["prevDisabled"]">
+        @ViewData["PageLink08"]
+    </a>
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@ViewData["PageLink09"]"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-default @ViewData["prevDisabled"]">
+        @ViewData["PageLink09"]
+    </a>
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@ViewData["PageLink10"]"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-default @ViewData["prevDisabled"]">
+        @ViewData["PageLink10"]
+    </a>
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@ViewData["PageLink11"]"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-default @ViewData["prevDisabled"]">
+        @ViewData["PageLink11"]
+    </a>
+    @if (@ViewData["nextPage"] != null)
+    {
+        <a asp-action="Index"
+           asp-route-sortOrder="@ViewData["CurrentSort"]"
+           asp-route-pageNumber="@(ViewData["nextPage"])"
+           asp-route-currentFilter="@ViewData["CurrentFilter"]"
+           class="btn btn-default @ViewData["prevDisabled"]">
+            Next
+        </a>
+    }
+</div>
+
+@foreach (var item in Model)
+{
+    <script>
+        $("#@(item.SequenceNumber)test").on("click", function() {
+        $("#@(item.SequenceNumber)Modal").modal('show');
+    });
+    </script>
+}
+<script>
+    $("#exampletest").on("click", function () {
+        $("#exampleModal").modal('show');
+    });
+</script>

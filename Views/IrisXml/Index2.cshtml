@@ -1,0 +1,354 @@
+﻿@model IEnumerable<IRIS.Models.IrisProcessedLog>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FillerOrderNum)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MsgControlId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Submissiontime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Durationtime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AccountNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AltAccountNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PatientId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HealthPlanName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LogoFile)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RxpharmCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HttpReturnCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Detailedjobstate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderControl)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrgCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DocumentType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Jobidentifier)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Jobspoolslot)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Queuesapplied)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Numberofdocuments)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Jobpagecount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PctTno)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PctPdf)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PctPrintHvs)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PctPrintApsUp)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PctPrintApsDown)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CountGiveCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CountNewRx)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReorderLineCt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderLineCt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrintAnywherePrinter)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Msid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrefEmail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ActiveJobs)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StrDocTypes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrefDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.JobSource)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Odtype)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrintDrop)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Edrop)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DocsStatusUrl)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.State)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tfn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DoctorOrderFlag)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Age)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Estorage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PctPrintApsDuplex)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PatientPreferenceHffEnrollmentFlag)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PatientMohistoryFirstOrderFlag)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LanguageId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CounthffStatus)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FillerOrderNum)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MsgControlId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Submissiontime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Durationtime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AccountNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AltAccountNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PatientId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HealthPlanName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LogoFile)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RxpharmCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HttpReturnCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Detailedjobstate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderControl)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrgCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DocumentType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Jobidentifier)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Jobspoolslot)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Queuesapplied)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Numberofdocuments)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Jobpagecount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PctTno)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PctPdf)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PctPrintHvs)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PctPrintApsUp)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PctPrintApsDown)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CountGiveCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CountNewRx)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReorderLineCt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderLineCt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrintAnywherePrinter)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Msid)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrefEmail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ActiveJobs)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StrDocTypes)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrefDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.JobSource)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Odtype)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrintDrop)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Edrop)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DocsStatusUrl)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.State)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tfn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DoctorOrderFlag)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Age)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gender)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Estorage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PctPrintApsDuplex)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PatientPreferenceHffEnrollmentFlag)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PatientMohistoryFirstOrderFlag)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LanguageId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CounthffStatus)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.SequenceId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.SequenceId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.SequenceId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
